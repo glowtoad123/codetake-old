@@ -10,8 +10,8 @@ function App() {
     <div className="App container">
       <header className="App-header">
         <Login />
-        {/*<Signup />
-        <Navbar />
+        <Signup />
+        {/*<Navbar />
         <Display />*/}
       </header>
     </div>

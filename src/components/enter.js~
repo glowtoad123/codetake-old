@@ -16,6 +16,15 @@ function Login(){
     )
     .then((ret) => console.log(ret))
 
+    serverClient.query(
+      q.CreateIndex({
+        name: 'account_name',
+        source: q.Collection('Accounts'),
+        terms: [{ field: ['data', '"account"'] }],
+      })
+    )
+    .then((ret) => console.log(ret))
+
     const [account, setAccount] = useState({
         password: "",
         username: ""
@@ -31,9 +40,10 @@ function Login(){
 
 
   function readAccount(event){
+  	console.log(account)
     serverClient.query(
       q.Get(
-        q.Match(q.Index('account'), password, username)
+        q.Match(q.Index('short_account_name'), account)
       )
     )
     .then((ret) => console.log(ret))
@@ -66,6 +76,15 @@ function Signup() {
       )
       .then((ret) => console.log(ret))
 
+      serverClient.query(
+        q.CreateIndex({
+          name: 'account_name',
+          source: q.Collection('Accounts'),
+          terms: [{ field: ['data', '"account"'] }],
+        })
+      )
+      .then((ret) => console.log(ret))
+
       const [account, setAccount] = useState({
           email: "",
           password: "",
@@ -82,7 +101,7 @@ function Signup() {
         serverClient.query(
             q.Create(
               q.Collection('Accounts'),
-              { data: account },
+              { data: { account: account } },
             )
           )
           .then((ret) => console.log(ret))
@@ -92,7 +111,7 @@ function Signup() {
         serverClient.query(
           q.Create(
             q.Collection('short_accounts'),
-            {data: account}
+            {data: {account: account}}
           )
         )
     }
