@@ -1,8 +1,8 @@
 import React, {useState} from 'react'
 import faunadb, { query as q } from "faunadb"
+import crypto from 'crypto'
 import './enter.css'
-
-const thea = {}
+const hash = crypto.createHash('sha256')
 
 function Login(){
 
@@ -12,15 +12,6 @@ function Login(){
       q.CreateKey({
         database: q.Database('Codentake'),
         role: 'server',
-      })
-    )
-    .then((ret) => console.log(ret))
-
-    serverClient.query(
-      q.CreateIndex({
-        name: 'account_name',
-        source: q.Collection('Accounts'),
-        terms: [{ field: ['data', '"account"'] }],
       })
     )
     .then((ret) => console.log(ret))
@@ -38,16 +29,31 @@ function Login(){
 
   const {username, password} = account
 
+  const [enhancedPassword, setEnhancedPassword] = useState("")
 
   function readAccount(event){
-  	console.log(account)
+  	hash.update(password)
+  	const hashedPassword = hash.digest("hex")
+  	hash.update(username)
+  	const hashedUsername = hash.digest("hex")
+  	const alphaPassword = hashedPassword + hashedUsername
+
+
+
+  	crypto.pbkdf2(alphaPassword, 'salt', 100000, 64, 'sha512', (err, derivedKey) => {
+   	if (err) throw err;
+    	setEnhancedPassword(derivedKey.toString('hex'))
+    	console.log(enhancedPassword);
+  	});  	
+  	
+  	
     serverClient.query(
       q.Get(
-        q.Match(q.Index('short_account_name'), account)
+        q.Match(q.Index('account'), enhancedPassword, username)
       )
     )
     .then((ret) => console.log(ret))
-}
+	}
 
 
 
@@ -76,15 +82,6 @@ function Signup() {
       )
       .then((ret) => console.log(ret))
 
-      serverClient.query(
-        q.CreateIndex({
-          name: 'account_name',
-          source: q.Collection('Accounts'),
-          terms: [{ field: ['data', '"account"'] }],
-        })
-      )
-      .then((ret) => console.log(ret))
-
       const [account, setAccount] = useState({
           email: "",
           password: "",
@@ -97,27 +94,36 @@ function Signup() {
         setAccount(current => ({...current, [name]: value}))
     }  
 
+    const {email, password, username} = account
+
+    hash.update(password)
+    const hashedPassword = hash.digest("hex")
+    hash.update(username)
+    const hashedUsername = hash.digest("hex")
+
+    const alphaPassword = password + username
+
+    const [enhancedPassword, setEnhancedPassword] = useState("")
+
+    crypto.pbkdf2(alphaPassword, 'salt', 100000, 64, 'sha512', (err, derivedKey) => {
+      if (err) throw err;
+      setEnhancedPassword(derivedKey.toString('hex'))
+      console.log(enhancedPassword);
+    });
+
+
+
     function addAccount(event){
+      console.log(account)
+      account.password = enhancedPassword
         serverClient.query(
             q.Create(
               q.Collection('Accounts'),
-              { data: { account: account } },
+              { data: account },
             )
           )
-          .then((ret) => console.log(ret))
-
-          delete account['email']
-
-        serverClient.query(
-          q.Create(
-            q.Collection('short_accounts'),
-            {data: {account: account}}
-          )
-        )
+          .then((ret) => (console.log(ret), alert(ret)))
     }
-
-    const {email, password, username} = account
-
 
     return (
         <div>

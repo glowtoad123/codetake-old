@@ -1,20 +1,20 @@
 import React, {useState} from 'react'
 import faunadb, { query as q } from "faunadb"
+import crypto from 'crypto'
 import './enter.css'
-
-const thea = {}
+const hash = crypto.createHash('sha256')
 
 function Login(){
 
-  var adminClient = new faunadb.Client({ secret: 'fnADpgTNT1ACEiUC4G_M5eNjnIPvv_eL99-n5nhe' });
+  //var adminClient = new faunadb.Client({ secret: 'fnADpgTNT1ACEiUC4G_M5eNjnIPvv_eL99-n5nhe' });
   var serverClient = new faunadb.Client({ secret: 'fnADpgTNT1ACEiUC4G_M5eNjnIPvv_eL99-n5nhe' });
-  adminClient.query(
+  /*adminClient.query(
       q.CreateKey({
         database: q.Database('Codentake'),
         role: 'server',
       })
     )
-    .then((ret) => console.log(ret))
+    .then((ret) => console.log(ret))*/
 
     const [account, setAccount] = useState({
         password: "",
@@ -29,15 +29,35 @@ function Login(){
 
   const {username, password} = account
 
+  const [enhancedPassword, setEnhancedPassword] = useState("")
 
-  function readAccount(event){
-    serverClient.query(
-      q.Get(
-        q.Match(q.Index('account'), password, username)
+  hash.update(password)
+    const hashedPassword = hash.digest("hex")
+    console.log()
+  	hash.update(username)
+  	const hashedUsername = hash.digest("hex")
+  	const alphaPassword = hashedPassword + hashedUsername
+
+
+
+
+
+  function readAccount(event){  	
+
+    console.log(enhancedPassword);
+    crypto.pbkdf2(alphaPassword, 'salt', 1, 64, 'sha512', (err, derivedKey) => {
+      if (err) throw err;
+       setEnhancedPassword(derivedKey.toString('hex'))
+     }).then(
+      serverClient.query(
+        q.Get(
+          q.Match(q.Index('account'), enhancedPassword, username)
+        )
       )
-    )
-    .then((ret) => console.log(ret))
-}
+      .then((ret) => console.log(ret))
+     )
+
+	}
 
 
 
@@ -56,15 +76,15 @@ function Login(){
 
 function Signup() {
 
-    var adminClient = new faunadb.Client({ secret: 'fnADpgTNT1ACEiUC4G_M5eNjnIPvv_eL99-n5nhe' });
+    //var adminClient = new faunadb.Client({ secret: 'fnADpgTNT1ACEiUC4G_M5eNjnIPvv_eL99-n5nhe' });
     var serverClient = new faunadb.Client({ secret: 'fnADpgTNT1ACEiUC4G_M5eNjnIPvv_eL99-n5nhe' });
-    adminClient.query(
+    /*adminClient.query(
         q.CreateKey({
           database: q.Database('Codentake'),
           role: 'server',
         })
       )
-      .then((ret) => console.log(ret))
+      .then((ret) => console.log(ret))*/
 
       const [account, setAccount] = useState({
           email: "",
@@ -78,27 +98,43 @@ function Signup() {
         setAccount(current => ({...current, [name]: value}))
     }  
 
-    function addAccount(event){
-        serverClient.query(
-            q.Create(
-              q.Collection('Accounts'),
-              { data: account },
-            )
-          )
-          .then((ret) => console.log(ret))
-
-          delete account['email']
-
-        serverClient.query(
-          q.Create(
-            q.Collection('short_accounts'),
-            {data: account}
-          )
-        )
-    }
-
     const {email, password, username} = account
 
+    hash.update(password)
+    const hashedPassword = hash.digest("hex")
+    hash.update(username)
+    const hashedUsername = hash.digest("hex")
+
+    const alphaPassword = hashedPassword + hashedUsername
+
+    const [enhancedPassword, setEnhancedPassword] = useState("")
+
+    /*crypto.pbkdf2(alphaPassword, 'salt', 10, 64, 'sha512', (err, derivedKey) => {
+      if (err) throw err;
+      setEnhancedPassword(derivedKey.toString('hex'))
+      console.log(enhancedPassword);
+    })*/
+
+
+
+    function addAccount(event){
+      console.log(account)
+      account.password = enhancedPassword
+      crypto.pbkdf2(alphaPassword, 'salt', 1, 64, 'sha512', (err, derivedKey) => {
+        if (err) throw err;
+        setEnhancedPassword(derivedKey.toString('hex'))
+        console.log(enhancedPassword);
+      }).then(
+        serverClient.query(
+          q.Create(
+            q.Collection('Accounts'),
+            { data: account },
+          )
+        )
+        .then((ret) => (console.log(ret), alert(ret)))
+      )
+
+    }
 
     return (
         <div>

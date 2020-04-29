@@ -1,30 +1,11 @@
 import React, {useState} from 'react'
 import me from './me.jpg'
 import { nanoid } from 'nanoid'
-import faunadb, { query as q } from "faunadb"
 
 function Display(){
 
     const [page, setPage] = useState(false)
     const [chosenOne, setChosenOne] = useState("")
-    var adminClient = new faunadb.Client({ secret: 'fnADpgTNT1ACEiUC4G_M5eNjnIPvv_eL99-n5nhe' });
-    var serverClient = new faunadb.Client({ secret: 'fnADpgTNT1ACEiUC4G_M5eNjnIPvv_eL99-n5nhe' });
-    adminClient.query(
-        q.CreateKey({
-          database: q.Database('Codentake'),
-          role: 'server',
-        })
-      )
-      .then((ret) => console.log(ret))
-
-      serverClient.query(
-        q.CreateIndex({
-          name: 'account_name',
-          source: q.Collection('posts'),
-          terms: [{ field: ['data', 'account'] }],
-        })
-      )
-      .then((ret) => console.log(ret))
 
     function choseOne(event){
 
