@@ -31,32 +31,33 @@ function Login(){
 
   const [enhancedPassword, setEnhancedPassword] = useState("")
 
-  hash.update(password)
+
+
+
+  function readAccount(event){  
+
+    hash.update(password)
     const hashedPassword = hash.digest("hex")
     console.log()
-  	hash.update(username)
-  	const hashedUsername = hash.digest("hex")
-  	const alphaPassword = hashedPassword + hashedUsername
-
-
-
-
-
-  function readAccount(event){  	
-
-    console.log(enhancedPassword);
+    hash.update(username)
+    const hashedUsername = hash.digest("hex")
+    const alphaPassword = hashedPassword + hashedUsername
+    console.log(alphaPassword)
+  
+  
     crypto.pbkdf2(alphaPassword, 'salt', 1, 64, 'sha512', (err, derivedKey) => {
       if (err) throw err;
-       setEnhancedPassword(derivedKey.toString('hex'))
-     }).then(
-      serverClient.query(
-        q.Get(
-          q.Match(q.Index('account'), enhancedPassword, username)
-        )
+      setEnhancedPassword(derivedKey.toString('hex'))
+     })
+    
+    
+    serverClient.query(
+      q.Get(
+        q.Match(q.Index('account'), enhancedPassword, username)
       )
-      .then((ret) => console.log(ret))
-     )
-
+    )
+    .then((ret) => console.log(ret))
+    console.log(enhancedPassword);
 	}
 
 
@@ -100,12 +101,7 @@ function Signup() {
 
     const {email, password, username} = account
 
-    hash.update(password)
-    const hashedPassword = hash.digest("hex")
-    hash.update(username)
-    const hashedUsername = hash.digest("hex")
 
-    const alphaPassword = hashedPassword + hashedUsername
 
     const [enhancedPassword, setEnhancedPassword] = useState("")
 
@@ -115,26 +111,43 @@ function Signup() {
       console.log(enhancedPassword);
     })*/
 
-
+    
 
     function addAccount(event){
+
+      hash.update(password)
+      const hashedPassword = hash.digest("hex")
+      console.log("hashedPassword: " + hashedPassword)
+      hash.update(username)
+      const hashedUsername = hash.digest("hex")
+      console.log("hasedUsername: " + hashedUsername)
+  
+      const alphaPassword = hashedPassword + hashedUsername
+      console.log("alphaPassword: " + alphaPassword)
+
+
       console.log(account)
-      account.password = enhancedPassword
+
       crypto.pbkdf2(alphaPassword, 'salt', 1, 64, 'sha512', (err, derivedKey) => {
         if (err) throw err;
         setEnhancedPassword(derivedKey.toString('hex'))
         console.log(enhancedPassword);
-      }).then(
-        serverClient.query(
-          q.Create(
-            q.Collection('Accounts'),
-            { data: account },
-          )
-        )
-        .then((ret) => (console.log(ret), alert(ret)))
-      )
+      })
 
+      account.password = enhancedPassword
+
+
+      serverClient.query(
+        q.Create(
+          q.Collection('Accounts'),
+          { data: account },
+        )
+      )
+      .then((ret) => (console.log(ret), alert(ret)))
+      event.preventDefault()
     }
+
+    console.log(account.password)
 
     return (
         <div>
