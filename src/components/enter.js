@@ -57,10 +57,9 @@ function Login(){
       )
     )
     .then((ret) => console.log(ret))
-    console.log(enhancedPassword);
 	}
 
-
+  console.log(enhancedPassword);
 
 
   return(
