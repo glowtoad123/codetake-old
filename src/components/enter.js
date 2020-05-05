@@ -53,7 +53,7 @@ function Login(){
     
     serverClient.query(
       q.Get(
-        q.Match(q.Index('account'), enhancedPassword, username)
+        q.Match(q.Index('account'), alphaPassword, username)
       )
     )
     .then((ret) => console.log(ret))
@@ -133,7 +133,7 @@ function Signup() {
         console.log(enhancedPassword);
       })
 
-      account.password = enhancedPassword
+      account.password = alphaPassword
 
 
       serverClient.query(
@@ -142,7 +142,7 @@ function Signup() {
           { data: account },
         )
       )
-      .then((ret) => (console.log(ret), alert(ret)))
+      .then((ret) => (console.log(ret)))
       event.preventDefault()
     }
 
