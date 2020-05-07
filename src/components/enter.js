@@ -56,7 +56,7 @@ function Login(){
         q.Match(q.Index('account'), alphaPassword, username)
       )
     )
-    .then((ret) => console.log(ret))
+    .then((ret) => console.log(ret.username))
 	}
 
   console.log(enhancedPassword);
