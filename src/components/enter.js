@@ -38,17 +38,18 @@ function Login(){
 
     hash.update(password)
     const hashedPassword = hash.digest("hex")
-    console.log()
+    console.log("hashedPassword: " + hashedPassword)
     hash.update(username)
     const hashedUsername = hash.digest("hex")
+    console.log("hashedUsername: " + hashedUsername)
     const alphaPassword = hashedPassword + hashedUsername
-    console.log(alphaPassword)
+    console.log("alphaPassword: " + alphaPassword)
   
   
-    crypto.pbkdf2(alphaPassword, 'salt', 1, 64, 'sha512', (err, derivedKey) => {
+    /*crypto.pbkdf2(alphaPassword, 'salt', 1, 64, 'sha512', (err, derivedKey) => {
       if (err) throw err;
       setEnhancedPassword(derivedKey.toString('hex'))
-     })
+     })*/
     
     
     serverClient.query(
@@ -56,10 +57,10 @@ function Login(){
         q.Match(q.Index('account'), alphaPassword, username)
       )
     )
-    .then((ret) => console.log(ret.username))
+    .then((ret) => console.log(ret))
 	}
 
-  console.log(enhancedPassword);
+  console.log("enhancedPassword: " + enhancedPassword);
 
 
   return(
