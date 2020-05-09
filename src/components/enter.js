@@ -31,7 +31,7 @@ function Login(){
 
   const [enhancedPassword, setEnhancedPassword] = useState("")
 
-
+  const [info, setInfo] = useState("")
 
 
   function readAccount(event){  
@@ -57,11 +57,11 @@ function Login(){
         q.Match(q.Index('account'), alphaPassword, username)
       )
     )
-    .then((ret) => console.log(ret))
+    .then((ret) => (console.log(ret.data.username), setInfo(ret.data.username)))
 	}
 
   console.log("enhancedPassword: " + enhancedPassword);
-
+  console.log(info)
 
   return(
     <div>
@@ -105,6 +105,8 @@ function Signup() {
 
     const [enhancedPassword, setEnhancedPassword] = useState("")
 
+    const [info, setInfo] = useState("")
+
     /*crypto.pbkdf2(alphaPassword, 'salt', 10, 64, 'sha512', (err, derivedKey) => {
       if (err) throw err;
       setEnhancedPassword(derivedKey.toString('hex'))
@@ -143,11 +145,12 @@ function Signup() {
           { data: account },
         )
       )
-      .then((ret) => (console.log(ret)))
+      .then((ret) => (console.log(ret), setInfo(ret)))
       event.preventDefault()
     }
 
     console.log(account.password)
+    console.log(info)
 
     return (
         <div>
