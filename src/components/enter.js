@@ -101,11 +101,15 @@ function Signup() {
 
     const {email, password, username} = account
 
-
+    const [enteredEmail, setenteredEmail] = useState("")
 
     const [enhancedPassword, setEnhancedPassword] = useState("")
 
+    const theenteredEmail = enteredEmail
+
     const [info, setInfo] = useState("")
+
+
 
     /*crypto.pbkdf2(alphaPassword, 'salt', 10, 64, 'sha512', (err, derivedKey) => {
       if (err) throw err;
@@ -130,15 +134,37 @@ function Signup() {
 
       console.log(account)
 
-      crypto.pbkdf2(alphaPassword, 'salt', 1, 64, 'sha512', (err, derivedKey) => {
+      /*crypto.pbkdf2(alphaPassword, 'salt', 1, 64, 'sha512', (err, derivedKey) => {
         if (err) throw err;
         setEnhancedPassword(derivedKey.toString('hex'))
         console.log(enhancedPassword);
-      })
+      })*/
 
       account.password = alphaPassword
 
+      
 
+      serverClient.query(
+        q.Get(
+          q.Match(q.Index('dublicateEmail'), email)
+        )
+      )
+      .then((ret) => {console.log(ret.data.email)}, (err) => {serverClient.query(
+        q.Create(
+          q.Collection('Accounts'),
+          { data: account },
+        )
+      )
+      .then((ret) => (console.log(ret), setInfo(ret)))})
+
+      
+      
+
+    /*console.log("theenteredEmail: " + theenteredEmail)
+
+    if(theenteredEmail !== ""){
+      alert("sorry, please choose a new email. This one is taken.")
+    } else {
       serverClient.query(
         q.Create(
           q.Collection('Accounts'),
@@ -146,6 +172,9 @@ function Signup() {
         )
       )
       .then((ret) => (console.log(ret), setInfo(ret)))
+    }*/
+
+
       event.preventDefault()
     }
 
