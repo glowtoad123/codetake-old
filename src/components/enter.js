@@ -149,13 +149,23 @@ function Signup() {
           q.Match(q.Index('dublicateEmail'), email)
         )
       )
-      .then((ret) => {console.log(ret.data.email)}, (err) => {serverClient.query(
-        q.Create(
-          q.Collection('Accounts'),
-          { data: account },
+      .then((ret) => {console.log(ret.data.email)}, (err) => {
+        serverClient.query(
+          q.Get(
+            q.Match(q.Index('dublicateUsername'), username)
+          )
         )
-      )
-      .then((ret) => (console.log(ret), setInfo(ret)))})
+        .then((ret) => {console.log(ret.data.username)}, (err) => {
+          serverClient.query(
+            q.Create(
+              q.Collection('Accounts'),
+              { data: account },
+            )
+          )
+          .then((ret) => (console.log(ret), setInfo(ret)))
+        })
+      })
+
 
       
       
