@@ -66,13 +66,26 @@ function Login(){
   return(
     <div className="signbox">
       <center>
-              <input onChange={readingProgress} className="signfield" value={username} type="text"    name="username" id="username"  placeholder="username" />
-              <input onChange={readingProgress} className="signfield" value={password}    type="password" name="password"    id="password" placeholder="password" />
-              <button class="submit" onClick={readAccount}>Login</button>
+          <div>
+            <input onChange={readingProgress} className="signfield" value={username} type="text"    name="username" id="username"  placeholder="username" />
+            <input onChange={readingProgress} className="signfield" value={password}    type="password" name="password"    id="password" placeholder="password" />
+            <button class="submit" onClick={readAccount}>Login</button>
+          </div>
       </center>
     </div>
   )
 }
+
+
+
+
+function Or(){
+  return(
+    <div className="or"><center>OR</center></div>
+  )
+}
+
+
 
 
 function Signup() {
@@ -116,6 +129,10 @@ function Signup() {
       setEnhancedPassword(derivedKey.toString('hex'))
       console.log(enhancedPassword);
     })*/
+
+
+
+
 
     
 
@@ -192,14 +209,17 @@ function Signup() {
     console.log(info)
 
     return (
-        <div>
-            <center>
-                <form onSubmit={addAccount}>
-                    <input onChange={readingProgress} className="signfield" value={email} type="email"   name="email" id="email"   placeholder="email" />
-                    <input onChange={readingProgress} className="signfield" value={password}    type="password" name="password"    id="password" placeholder="password" />
-                    <input onChange={readingProgress} className="signfield" value={username} type="text"    name="username" id="username"  placeholder="username" />
-                    <button className="submit"  type="submit">submit</button>
+        <div onSubmit={addAccount}>
+            <center className="signbox">
+              
+              <div>
+                <form>
+                  <input onChange={readingProgress} className="signfield" value={email} type="email"   name="email" id="email"   placeholder="email" />
+                  <input onChange={readingProgress} className="signfield" value={password}    type="password" name="password"    id="password" placeholder="password" />
+                  <input onChange={readingProgress} className="signfield" value={username} type="text"    name="username" id="username"  placeholder="username" />
+                  <button className="submit"  type="submit">Register</button>
                 </form>
+              </div>
 
             </center>
 
@@ -208,4 +228,4 @@ function Signup() {
 }
 
 export default Signup
-export {Login}
+export {Or, Login}
