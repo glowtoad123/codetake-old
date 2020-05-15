@@ -64,7 +64,7 @@ function Login(){
   console.log(info)
 
   return(
-    <div>
+    <div className="signbox">
       <center>
               <input onChange={readingProgress} className="signfield" value={username} type="text"    name="username" id="username"  placeholder="username" />
               <input onChange={readingProgress} className="signfield" value={password}    type="password" name="password"    id="password" placeholder="password" />
@@ -198,7 +198,7 @@ function Signup() {
                     <input onChange={readingProgress} className="signfield" value={email} type="email"   name="email" id="email"   placeholder="email" />
                     <input onChange={readingProgress} className="signfield" value={password}    type="password" name="password"    id="password" placeholder="password" />
                     <input onChange={readingProgress} className="signfield" value={username} type="text"    name="username" id="username"  placeholder="username" />
-                    <button class="submit"  type="submit">submit</button>
+                    <button className="submit"  type="submit">submit</button>
                 </form>
 
             </center>
