@@ -149,13 +149,13 @@ function Signup() {
           q.Match(q.Index('dublicateEmail'), email)
         )
       )
-      .then((ret) => {console.log(ret.data.email)}, (err) => {
+      .then((ret) => {console.log(ret.data.email); alert("sorry, but this email has already been taken")}, (err) => {
         serverClient.query(
           q.Get(
             q.Match(q.Index('dublicateUsername'), username)
           )
         )
-        .then((ret) => {console.log(ret.data.username)}, (err) => {
+        .then((ret) => {console.log(ret.data.username); alert("Sorry, but this username has alread been taken")}, (err) => {
           serverClient.query(
             q.Create(
               q.Collection('Accounts'),
