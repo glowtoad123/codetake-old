@@ -6,7 +6,6 @@ const hash = crypto.createHash('sha256')
 
 function Enter(props){  
 
-
   const [hasLoggedIn, setHasLoggedIn] = useState(true)
 
   function Login(){
@@ -61,7 +60,7 @@ function Enter(props){
           q.Match(q.Index('account'), alphaPassword, username)
         )
       )
-      .then((ret) => (console.log(ret.data.username), setInfo(ret.data.username), sessionStorage.setItem("yourWorks", ret.data.password), setHasLoggedIn((current) => {return !current})))
+      .then((ret) => (console.log(ret.data.username), setInfo(ret.data.username), sessionStorage.setItem("yourWorks", ret.data.password), sessionStorage.setItem("username", ret.data.username), setHasLoggedIn((current) => {return !current})))
     }
 
     console.log("enhancedPassword: " + enhancedPassword);
@@ -184,7 +183,7 @@ function Enter(props){
                 { data: account },
               )
             )
-            .then((ret) => (console.log(ret), setInfo(ret), sessionStorage.setItem("yourWorks", ret.data.password), setHasLoggedIn((current) => {return !current})))
+            .then((ret) => (console.log(ret), setInfo(ret), sessionStorage.setItem("yourWorks", ret.data.password), sessionStorage.setItem("username", ret.data.username), setHasLoggedIn((current) => {return !current})))
           })
         })
 
@@ -248,6 +247,8 @@ function Enter(props){
   )
 
 }
+
+
 
 
 export default Enter

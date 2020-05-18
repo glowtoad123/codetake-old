@@ -44,3 +44,15 @@
     margin-left: 12px;
     z-index: 0;
 }
+
+
+.newProject {
+    padding: 10px;
+    border: none;
+    border-radius: 12px;
+    background-color: #354f52;
+    color: #e8e8e7;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}
