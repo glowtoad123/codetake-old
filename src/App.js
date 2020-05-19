@@ -4,6 +4,7 @@ import Navbar from './components/navbar'
 import Display from './components/projectdisplay'
 import './styles.css';
 import Enter from './components/enter'
+import Newproject from './components/newProject'
 //import Signup, {Or, Login} from './components/enter'
 
 function App() {
@@ -24,10 +25,11 @@ function App() {
   return (
     <div className="App container">
       <header className="App-header">
-        {/*<Enter />
+        <Enter />
         <Navbar onClick={alterPage} />
-        {page === "takes" && <Display />}
+        {/*{page === "takes" && <Display />}
         <button onClick={toNewProjectPage} className="newProject" name="newProject">Create New Project</button>*/}
+        <Newproject />
       </header>
     </div>
   );
