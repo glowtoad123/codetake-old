@@ -1,8 +1,20 @@
 import React, {useState} from 'react'
 import me from './me.jpg'
+import faunadb, { query as q } from "faunadb"
 import { nanoid } from 'nanoid'
 
 function Display(){
+//test to see if the project is broken or not
+    const projectArray = []
+    const help = "name"
+    var serverClient = new faunadb.Client({ secret: 'fnADpgTNT1ACEiUC4G_M5eNjnIPvv_eL99-n5nhe' });
+
+    serverClient.query(
+        q.Paginate(q.Match(q.Index("projects")))
+      )
+      .then((ret) => (console.log(ret)))
+    
+    console.log(projectArray)
 
     const [page, setPage] = useState(false)
     const [chosenOne, setChosenOne] = useState("")
