@@ -12,6 +12,7 @@ function Newproject(){
         Categories: "",
         Changes: "",
         Roadmap: "",
+        type: "project",
     })
 
     const {Project_Title, Version_num, Participant_num, Description, Categories, Changes, Roadmap} = projectData
