@@ -9,9 +9,11 @@ function Display(){
     var serverClient = new faunadb.Client({ secret: 'fnADpgTNT1ACEiUC4G_M5eNjnIPvv_eL99-n5nhe' });
 
     serverClient.query(
-        q.Paginate(q.Match(q.Index("projects")))
-      )
-      .then((ret) => (console.log(ret.length)))
+        q.Map(
+            q.Paginate(q.Match(q.Index("projects"))),
+            q.Lambda("X", q.Get(q.Var("X")))
+          )
+    ).then((ret) => {console.log(ret.data); projectArray.push(ret.data)})
     console.log(projectArray)
 
     const [page, setPage] = useState(false)
@@ -73,6 +75,7 @@ function Display(){
             <Displayprop pic={me} name="Alonzo" likes="125 likes" participants="14 participants"  title="Codetake" description="this is a pwa that allows anyone to show their take on a concept or solution and get feedback from others as they review and test your take"/>
             <Displayprop pic={me} name="Alonzo" likes="125 likes" participants="14 participants"  title="Codetake" description="this is a pwa that allows anyone to show their take on a concept or solution and get feedback from others as they review and test your take"/>
             <Displayprop pic={me} name="Alonzo" likes="125 likes" participants="14 participants"  title="Codetake" description="this is a pwa that allows anyone to show their take on a concept or solution and get feedback from others as they review and test your take"/>
+            {projectArray.map((current) => {return <Displayprop pic={me} name="Alonzo" likes="0" participants={current.data.Participant_num} title={current.data.Project_Title} description={current.data.Description} />})}
         </div>
     )
 }
