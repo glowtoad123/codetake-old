@@ -13,7 +13,8 @@ function Display(){
             q.Paginate(q.Match(q.Index("projects"))),
             q.Lambda("X", q.Get(q.Var("X")))
           )
-    ).then((ret) => {console.log(ret.data); projectArray.push(ret.data)})
+    ).then((ret, index) => {ret.data.map(one => {console.log(one.data); projectArray.push(one.data)})})
+    projectArray.map(info => console.log(info))
     console.log(projectArray)
 
     const [page, setPage] = useState(false)
@@ -65,17 +66,19 @@ function Display(){
         )
     }
 
+    console.log(typeof projectArray)
+    var array = projectArray.toString()
 
 
-
-
+ 
     return(
         <div>
             <Displayprop pic={me} name="Alonzo" likes="125 likes" participants="14 participants"  title="Codetake" description="this is a pwa that allows anyone to show their take on a concept or solution and get feedback from others as they review and test your take"/>
             <Displayprop pic={me} name="Alonzo" likes="125 likes" participants="14 participants"  title="Codetake" description="this is a pwa that allows anyone to show their take on a concept or solution and get feedback from others as they review and test your take"/>
             <Displayprop pic={me} name="Alonzo" likes="125 likes" participants="14 participants"  title="Codetake" description="this is a pwa that allows anyone to show their take on a concept or solution and get feedback from others as they review and test your take"/>
             <Displayprop pic={me} name="Alonzo" likes="125 likes" participants="14 participants"  title="Codetake" description="this is a pwa that allows anyone to show their take on a concept or solution and get feedback from others as they review and test your take"/>
-            {projectArray.map((current) => {return <Displayprop pic={me} name="Alonzo" likes="0" participants={current.data.Participant_num} title={current.data.Project_Title} description={current.data.Description} />})}
+            {projectArray.map((current, index) => {return <Displayprop pic={me} name="Alonzo" likes="0" participants={current.Participant_num} title={current.Project_Title} description={current.Description} />})}
+            <p>{array}</p>
         </div>
     )
 }
