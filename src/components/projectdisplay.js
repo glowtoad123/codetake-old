@@ -5,7 +5,43 @@ import { nanoid } from 'nanoid'
 
 function Display(){
 //test to see if the project is broken or not
-    const projectArray = []
+    const [projectArray, setProjectArray] =  useState([])
+    const testArray = [{
+            "Categories": "React", 
+            "Changes": "Testing to see if it will work", 
+            "Description": "This is a react app", 
+            "Participant_num": "0", 
+            "Project_Title": "React APP", 
+            "Roadmap": "Make it live", 
+            "Version_num": "0.1",
+        }, {
+            "Categories": "react", 
+            "Changes": "Trying to get this page to work", 
+            "Description": 'React app',
+            "Participant_num": "0", 
+            "Project_Title": "React APp", 
+            "Roadmap": "to launch",
+            "Version_num": "0.1",
+        }, {
+            "Categories": "testmaterial",
+            "Changes": "none",
+            "Creator": "alonzo6546",
+            "Description": "This really is a test to see if this will go into the array with all the others",
+            "Participant_num": "0",
+            "Project_Title": "The app",
+            "Roadmap": "none at all",
+            "Version_num": "0.001",
+        }, {
+            "Categories": "none",
+            "Changes": "creation",
+            "Description": "an app",
+            "Participant_num": "0",
+            "Project_Title": "a random app",
+            "Roadmap": "death",
+            "Version_num": "0.01",
+        }]
+
+    console.log(testArray[0])
     var serverClient = new faunadb.Client({ secret: 'fnADpgTNT1ACEiUC4G_M5eNjnIPvv_eL99-n5nhe' });
 
     serverClient.query(
@@ -13,8 +49,8 @@ function Display(){
             q.Paginate(q.Match(q.Index("projects"))),
             q.Lambda("X", q.Get(q.Var("X")))
           )
-    ).then((ret, index) => {ret.data.map(one => {console.log(one.data); projectArray.push(one.data)})})
-    projectArray.map(info => console.log(info))
+    ).then((ret, index) => {ret.data.map(one => {console.log(one.data); setProjectArray((current) => {return [...current, one.data]})})})
+    //projectArray.map(info => console.log(info))
     console.log(projectArray)
 
     const [page, setPage] = useState(false)
@@ -66,7 +102,7 @@ function Display(){
         )
     }
 
-    console.log(typeof projectArray)
+    console.log(projectArray)
     var array = projectArray.toString()
 
 
@@ -77,7 +113,7 @@ function Display(){
             <Displayprop pic={me} name="Alonzo" likes="125 likes" participants="14 participants"  title="Codetake" description="this is a pwa that allows anyone to show their take on a concept or solution and get feedback from others as they review and test your take"/>
             <Displayprop pic={me} name="Alonzo" likes="125 likes" participants="14 participants"  title="Codetake" description="this is a pwa that allows anyone to show their take on a concept or solution and get feedback from others as they review and test your take"/>
             <Displayprop pic={me} name="Alonzo" likes="125 likes" participants="14 participants"  title="Codetake" description="this is a pwa that allows anyone to show their take on a concept or solution and get feedback from others as they review and test your take"/>
-            {projectArray.map((current, index) => {return <Displayprop pic={me} name="Alonzo" likes="0" participants={current.Participant_num} title={current.Project_Title} description={current.Description} />})}
+            {/*{projectArray.map((current, index) => {return <Displayprop pic={me} name="Alonzo" likes="0" participants={current.Participant_num} title={current.Project_Title} description={current.Description} />})}*/}
             <p>{array}</p>
         </div>
     )

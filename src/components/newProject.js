@@ -19,6 +19,7 @@ function Newproject(){
 
     function settingData(event){
         const name = event.target.name
+        console.log(event.target.name)
         const value = event.target.value
         setProjectData((current) => ({...current, [name]: value}))
     }
