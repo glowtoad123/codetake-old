@@ -1,11 +1,10 @@
 import React, {useState} from 'react'
 import me from './me.jpg'
 import faunadb, { query as q } from "faunadb"
-import { nanoid } from 'nanoid'
 
 function Display(){
 //test to see if the project is broken or not
-    const [projectArray, setProjectArray] =  useState([])
+    const [projectArray, setProjectArray] =  useState("")
     const testArray = [{
             "Categories": "React", 
             "Changes": "Testing to see if it will work", 
@@ -41,17 +40,27 @@ function Display(){
             "Version_num": "0.01",
         }]
 
-    console.log(testArray[0])
+
+
+    var theNewOne =             {"Categories": "none",
+    "Changes": "creation",
+    "Description": "an app",
+    "Participant_num": "0",
+    "Project_Title": "a random app",
+    "Roadmap": "death",
+    "Version_num": "0.01",    }
+
+    testArray.push(theNewOne)
     var serverClient = new faunadb.Client({ secret: 'fnADpgTNT1ACEiUC4G_M5eNjnIPvv_eL99-n5nhe' });
 
-    serverClient.query(
+    /*serverClient.query(
         q.Map(
             q.Paginate(q.Match(q.Index("projects"))),
             q.Lambda("X", q.Get(q.Var("X")))
           )
-    ).then((ret, index) => {ret.data.map(one => {console.log(one.data); setProjectArray((current) => {return [...current, one.data]})})})
+    ).then((ret, index) => {ret.data.map(one => {console.log(one.data); testArray.push(one.data)})}).then(
     //projectArray.map(info => console.log(info))
-    console.log(projectArray)
+    console.log(testArray[4]))*/
 
     const [page, setPage] = useState(false)
     const [chosenOne, setChosenOne] = useState("")
@@ -102,19 +111,25 @@ function Display(){
         )
     }
 
-    console.log(projectArray)
-    var array = projectArray.toString()
 
+    serverClient.query(
+        q.Map(
+            q.Paginate(q.Match(q.Index("projects"))),
+            q.Lambda("X", q.Get(q.Var("X")))
+          )
+    ).then((ret, index) => {ret.data.map(one => {console.log(one.data); testArray.push(one.data); localStorage.setItem('projects', JSON.stringify(testArray));})})
 
- 
+    var newTestArray = JSON.parse(localStorage.getItem('projects'))
+    console.log(newTestArray)
+
     return(
         <div>
             <Displayprop pic={me} name="Alonzo" likes="125 likes" participants="14 participants"  title="Codetake" description="this is a pwa that allows anyone to show their take on a concept or solution and get feedback from others as they review and test your take"/>
             <Displayprop pic={me} name="Alonzo" likes="125 likes" participants="14 participants"  title="Codetake" description="this is a pwa that allows anyone to show their take on a concept or solution and get feedback from others as they review and test your take"/>
             <Displayprop pic={me} name="Alonzo" likes="125 likes" participants="14 participants"  title="Codetake" description="this is a pwa that allows anyone to show their take on a concept or solution and get feedback from others as they review and test your take"/>
             <Displayprop pic={me} name="Alonzo" likes="125 likes" participants="14 participants"  title="Codetake" description="this is a pwa that allows anyone to show their take on a concept or solution and get feedback from others as they review and test your take"/>
-            {/*{projectArray.map((current, index) => {return <Displayprop pic={me} name="Alonzo" likes="0" participants={current.Participant_num} title={current.Project_Title} description={current.Description} />})}*/}
-            <p>{array}</p>
+            {newTestArray.map((current, index) => {return <Displayprop pic={me} name="Alonzo" likes="0" participants={current.Participant_num} title={current.Project_Title} description={current.Description} />})}
+            {/*<Displayprop pic={me} name="Alonzo" likes="125 likes" participants={projectArray.Participant_num}  title={projectArray.Project_Title} description={projectArray.Description}/>*/}
         </div>
     )
 }
