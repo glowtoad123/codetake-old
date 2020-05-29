@@ -39,13 +39,10 @@ function Enter(props){
 
     function readAccount(event){  
 
-      hash.update(password)
-      const hashedPassword = hash.digest("hex")
-      console.log("hashedPassword: " + hashedPassword)
-      hash.update(username)
-      const hashedUsername = hash.digest("hex")
-      console.log("hashedUsername: " + hashedUsername)
-      const alphaPassword = hashedPassword + hashedUsername
+      const hashedPassword = password + username
+
+      hash.update(hashedPassword)
+      const alphaPassword = hash.digest("hex")
       console.log("alphaPassword: " + alphaPassword)
     
     
@@ -142,14 +139,10 @@ function Enter(props){
 
       function addAccount(event){
 
-        hash.update(password)
-        const hashedPassword = hash.digest("hex")
-        console.log("hashedPassword: " + hashedPassword)
-        hash.update(username)
-        const hashedUsername = hash.digest("hex")
-        console.log("hasedUsername: " + hashedUsername)
-    
-        const alphaPassword = hashedPassword + hashedUsername
+        const hashedPassword = password + username
+
+        hash.update(hashedPassword)
+        const alphaPassword = hash.digest("hex")
         console.log("alphaPassword: " + alphaPassword)
 
 
