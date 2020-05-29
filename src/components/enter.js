@@ -51,13 +51,17 @@ function Enter(props){
         setEnhancedPassword(derivedKey.toString('hex'))
       })*/
       
+      crypto.pbkdf2(alphaPassword, 'salt', 1, 64, 'sha512', (err, derivedKey) => {
+        if (err) throw err;
+        setEnhancedPassword(derivedKey.toString('hex'))
       
       serverClient.query(
         q.Get(
-          q.Match(q.Index('account'), alphaPassword, username)
+          q.Match(q.Index('account'), derivedKey.toString('hex'), username)
         )
       )
       .then((ret) => (console.log(ret.data.username), setInfo(ret.data.username), sessionStorage.setItem("yourWorks", ret.data.password), sessionStorage.setItem("username", ret.data.username), setHasLoggedIn((current) => {return !current})))
+    })
     }
 
     console.log("enhancedPassword: " + enhancedPassword);
@@ -154,10 +158,14 @@ function Enter(props){
           console.log(enhancedPassword);
         })*/
 
-        account.password = alphaPassword
+        //account.password = alphaPassword
 
         
-
+      crypto.pbkdf2(alphaPassword, 'salt', 1, 64, 'sha512', (err, derivedKey) => {
+          if (err) throw err;
+          account.password = derivedKey.toString('hex')
+          console.log(enhancedPassword);
+        
         serverClient.query(
           q.Get(
             q.Match(q.Index('dublicateEmail'), email)
@@ -179,6 +187,7 @@ function Enter(props){
             .then((ret) => (console.log(ret), setInfo(ret), sessionStorage.setItem("yourWorks", ret.data.password), sessionStorage.setItem("username", ret.data.username), setHasLoggedIn((current) => {return !current})))
           })
         })
+      })
 
 
         
