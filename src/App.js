@@ -25,12 +25,13 @@ function App() {
   return (
     <div className="App container">
       <header className="App-header">
-        <Enter />
         <Navbar onClick={alterPage} />
-        <Display />
+        {/*<Enter />
+        <Display />*/}
         {/*{page === "takes" && <Display />}
         <button onClick={toNewProjectPage} className="newProject" name="newProject">Create New Project</button>*/}
         <Newproject />
+        <Display />
       </header>
     </div>
   );
