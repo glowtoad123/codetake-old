@@ -34,16 +34,15 @@ function Navbar(){
 
     var prevScrollPos = window.pageYOffset;
     const [currentScrollPos, setCurrentScrollPos] = useState("")
-    const [hasMoved, setHasMoved] = useState(false)
+    const [hasMoved, setHasMoved] = useState(true)
     window.onscroll = function() {
-      /*var currentScrollPos = window.pageYOffset;
+      var currentScrollPos = window.pageYOffset;
       if (prevScrollPos > currentScrollPos) {
-        setHasMoved(current => !current);
+        setHasMoved(current => false);
       } else {
-        setHasMoved(false)
+        setHasMoved(true)
       }
-      prevScrollPos = currentScrollPos;*/
-      setHasMoved(current => !current)
+      prevScrollPos = currentScrollPos;
     } 
 
     hasMoved && (NavbarStyle.display = "none")
