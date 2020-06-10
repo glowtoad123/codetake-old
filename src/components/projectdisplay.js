@@ -106,7 +106,7 @@ function Display(){
                 <img className="creatorpic" src={props.pic} />
                 <p className="creatorname"><strong>{props.name}</strong></p>
                 <br />
-                {tagList.map((hashtag) => {return <Tag tag={hashtag}/>})}
+                <Tag tag={props.tag}/>
             </div>
         )
     }
@@ -121,14 +121,18 @@ function Display(){
 
     var newTestArray = JSON.parse(localStorage.getItem('projects'))
     console.log(newTestArray)
-
+    const [tagNames, settagNames] = useState([])
+    newTestArray.map(current => {console.log(current.Categories)})
+    console.log(tagNames)
     return(
         <div style={{margin: "auto"}}>
             <Displayprop pic={me} name="Alonzo" likes="125 likes" participants="14 participants"  title="Codetake" description="this is a pwa that allows anyone to show their take on a concept or solution and get feedback from others as they review and test your take"/>
-            <Displayprop pic={me} name="Alonzo" likes="125 likes" participants="14 participants"  title="Codetake" description="this is a pwa that allows anyone to show their take on a concept or solution and get feedback from others as they review and test your take"/>
-            <Displayprop pic={me} name="Alonzo" likes="125 likes" participants="14 participants"  title="Codetake" description="this is a pwa that allows anyone to show their take on a concept or solution and get feedback from others as they review and test your take"/>
-            <Displayprop pic={me} name="Alonzo" likes="125 likes" participants="14 participants"  title="Codetake" description="this is a pwa that allows anyone to show their take on a concept or solution and get feedback from others as they review and test your take"/>
-            {newTestArray.map((current, index) => {return <Displayprop pic={me} name="Alonzo" likes="0" participants={current.Participant_num} title={current.Project_Title} description={current.Description} />})}
+            {
+                newTestArray.map((current, index) => {console.log({tagNames}); return (<div>
+                    <Displayprop pic={me} name="Alonzo" likes="0" participants={current.Participant_num} title={current.Project_Title} description={current.Description}/>
+                    
+                    {tagNames.map(each =>{return (<Tag tag={each.Categories}/>)})}</div>)
+            })}
             {/*<Displayprop pic={me} name="Alonzo" likes="125 likes" participants={projectArray.Participant_num}  title={projectArray.Project_Title} description={projectArray.Description}/>*/}
         </div>
     )

@@ -26,7 +26,7 @@ function Navbar(){
         borderRadius: "12px",
         boxShadow: "0 3.2px 7.2px 0 rgba(0, 0, 0, .132), 0 .6px 1.8px 0 rgba(0, 0, 0, .108)",
         position: "fixed",
-        left: "0",
+        right: "0",
         top: "0",
         zIndex: "2",
         display: "inline-block",
