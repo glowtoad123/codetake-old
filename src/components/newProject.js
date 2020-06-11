@@ -5,6 +5,10 @@ import "./newProject.css"
 
 function Newproject(){
     var serverClient = new faunadb.Client({ secret: 'fnADpgTNT1ACEiUC4G_M5eNjnIPvv_eL99-n5nhe' });
+    
+    const username = sessionStorage.getItem("username")
+    console.log(username)
+    
     const [projectData, setProjectData] = useState({
         Project_Title: "",
         Version_num: "",
@@ -13,6 +17,7 @@ function Newproject(){
         Changes: "",
         Roadmap: "",
         type: "project",
+        Creator: username,
     })
 
     const {Project_Title, Version_num, Description, Categories, Changes, Roadmap} = projectData
@@ -50,7 +55,7 @@ function Newproject(){
     }
 
     return(
-        <div><form onSubmit={saveData}>
+        <div><form id="npform" onSubmit={saveData}>
             <input type="text" className="newProjectItem" onChange={settingData} name="Project_Title"     value={Project_Title}   placeholder=" Project Title"   id="Project_Title"    ></input>
             <input className="newProjectItem" onChange={settingData} name="Version_num"       value={Version_num}     placeholder=" Version_num"     id="Version_num"      ></input>
             <textarea className="newProjectItem" onChange={settingData} name="Description"       value={Description}     placeholder=" Description"     id="Description"      ></textarea>

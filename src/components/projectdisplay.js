@@ -5,40 +5,7 @@ import faunadb, { query as q } from "faunadb"
 function Display(){
 //test to see if the project is broken or not
     const [projectArray, setProjectArray] =  useState("")
-    const testArray = [{
-            "Categories": "React", 
-            "Changes": "Testing to see if it will work", 
-            "Description": "This is a react app", 
-            "Participant_num": "0", 
-            "Project_Title": "React APP", 
-            "Roadmap": "Make it live", 
-            "Version_num": "0.1",
-        }, {
-            "Categories": "react", 
-            "Changes": "Trying to get this page to work", 
-            "Description": 'React app',
-            "Participant_num": "0", 
-            "Project_Title": "React APp", 
-            "Roadmap": "to launch",
-            "Version_num": "0.1",
-        }, {
-            "Categories": "testmaterial",
-            "Changes": "none",
-            "Creator": "alonzo6546",
-            "Description": "This really is a test to see if this will go into the array with all the others",
-            "Participant_num": "0",
-            "Project_Title": "The app",
-            "Roadmap": "none at all",
-            "Version_num": "0.001",
-        }, {
-            "Categories": "none",
-            "Changes": "creation",
-            "Description": "an app",
-            "Participant_num": "0",
-            "Project_Title": "a random app",
-            "Roadmap": "death",
-            "Version_num": "0.01",
-        }]
+    const testArray = []
 
 
 
@@ -97,6 +64,7 @@ function Display(){
 
         return(
             <div className="display" style={{width: '300px'}}>
+                <center></center>
                 <h1 onClick={choseOne} className="displaytitle"><strong>{props.title}</strong></h1>
                 <p><strong>{props.description}</strong></p>
                 <br />
@@ -128,10 +96,10 @@ function Display(){
         <div style={{margin: "auto"}}>
             <Displayprop pic={me} name="Alonzo" likes="125 likes" participants="14 participants"  title="Codetake" description="this is a pwa that allows anyone to show their take on a concept or solution and get feedback from others as they review and test your take"/>
             {
-                newTestArray.map((current, index) => {console.log({tagNames}); return (<div>
-                    <Displayprop pic={me} name="Alonzo" likes="0" participants={current.Participant_num} title={current.Project_Title} description={current.Description}/>
+                newTestArray.map((current, index) => {console.log({tagNames}); return (
+                    <Displayprop pic={me} name={current.Creator} likes="0" participants={current.Participant_num} title={current.Project_Title} description={current.Description} tag={current.Categories}/>
                     
-                    {tagNames.map(each =>{return (<Tag tag={each.Categories}/>)})}</div>)
+                   )
             })}
             {/*<Displayprop pic={me} name="Alonzo" likes="125 likes" participants={projectArray.Participant_num}  title={projectArray.Project_Title} description={projectArray.Description}/>*/}
         </div>

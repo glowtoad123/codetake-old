@@ -24,7 +24,7 @@ function Navbar(){
         backgroundColor: "#5f9ea0",
         border: "none",
         borderRadius: "12px",
-        boxShadow: "0 3.2px 7.2px 0 rgba(0, 0, 0, .132), 0 .6px 1.8px 0 rgba(0, 0, 0, .108)",
+        boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
         position: "fixed",
         right: "0",
         top: "0",

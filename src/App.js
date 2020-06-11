@@ -26,8 +26,7 @@ function App() {
     <div className="App container">
       <header className="App-header">
         <Navbar onClick={alterPage} />
-        {/*<Enter />
-        <Display />*/}
+        <Enter />
         {/*{page === "takes" && <Display />}
         <button onClick={toNewProjectPage} className="newProject" name="newProject">Create New Project</button>*/}
         <Newproject />
