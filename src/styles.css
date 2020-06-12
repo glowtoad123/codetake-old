@@ -13,7 +13,7 @@
 
 .display {
     display: inline-block;
-    background-color: darkslategray;
+    background-color: #cad2c5;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);    border: none;
     border-radius: 12px;
     margin: 20px;
@@ -21,8 +21,8 @@
 }
 
 .displaytitle {
-    background-color: #081111;
-    box-shadow: 0 25.6px 57.6px 0 rgba(0, 0, 0, .22), 0 4.8px 14.4px 0 rgba(0, 0, 0, .18),  15px 15px 5px 20px rgb(43, 16, 16) inset;
+    background-color: #2f3e46;
+    box-shadow: 0 25.6px 57.6px 0 rgba(0, 0, 0, .22), 0 4.8px 14.4px 0 rgba(0, 0, 0, .18),;
     color: white;
     display: inline-block;
     z-index: 0;
@@ -44,7 +44,7 @@
     bottom: 25px;
     margin-left: 12px;
     z-index: 0;
-    background-color: black;
+    background-color: #2f3e46;
     color: white;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 6px;

@@ -13,7 +13,15 @@ function Navprop(props){
     return(
         <div onClick={changePage}>
             <img style={{width: '30%', height: '30%'}} className="navpic" src={props.pic} />
-            <p style={{display: 'inline-block', fontSize: "16px", position: 'relative', bottom: '15px'}}><strong>{props.description}</strong></p>
+            <p style={{
+                display: 'inline-block',
+                fontSize: "16px",
+                position: 'relative',
+                bottom: '15px',
+                backgroundColor: "#2f3e46",
+                borderRadius: "6px",
+                color: "white"
+                }}><strong>{props.description}</strong></p>
         </div>
     )
 }
@@ -21,7 +29,7 @@ function Navprop(props){
 function Navbar(){
 
     var NavbarStyle = {
-        backgroundColor: "#5f9ea0",
+        backgroundColor: "#cad2c5",
         border: "none",
         borderRadius: "12px",
         boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",

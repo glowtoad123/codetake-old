@@ -63,7 +63,8 @@ function Newproject(){
                 <button onClick={settingtagList} id="addCategory" type="submit">Add Category</button>
                 <div>{tagList.map(current => <p className="tags" style={{
                 display: 'inline-block',
-                backgroundColor: 'white',
+                backgroundColor: '#84a98c',
+                color: "black",
                 margin: '12px',
                 border: 'none',
                 borderRadius: '6px'}}><strong>{current}</strong></p>)}</div>

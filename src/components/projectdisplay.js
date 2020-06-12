@@ -50,7 +50,9 @@ function Display(){
         return(
             <p style={{
                 display: 'inline-block',
-                backgroundColor: 'white',
+                backgroundColor: '#84a98c',
+                color: "black",
+                boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
                 margin: '12px',
                 border: 'none',
                 borderRadius: '6px'}}><strong>{props.tag}</strong></p>
