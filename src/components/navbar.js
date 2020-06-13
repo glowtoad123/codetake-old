@@ -1,9 +1,9 @@
 import React, {useState} from 'react'
 import zeit from './bullet.ico'
-import takes from './library.svg'
+import takes from './book.svg'
 import user from './user.svg'
 import favorites from './favorite.svg'
-import updates from './information.svg'
+import updates from './notification.svg'
 import settings from './settings.svg'
 
 
@@ -17,7 +17,11 @@ function Navprop(props){
 
     return(
         <div onClick={changePage}>
-            <img style={{width: '48px', height: '48px',}} className="navpic" src={props.pic} />
+            <img style={{
+                width: '48px', 
+                height: '48px',
+                marginRight: '20px',
+                }} className="navpic" src={props.pic} />
             <p style={{
                 display: 'inline-block',
                 fontSize: "16px",

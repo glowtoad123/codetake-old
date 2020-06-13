@@ -13,7 +13,7 @@ body {
     display: inline-block;
     margin: 40px;
     font-size: 24px;
-    color: #2f3e46
+    color: #2f3e46;
 }
 
 .submit {
@@ -25,6 +25,7 @@ body {
     background-color: #2f3e46;
     color: white;
     font-weight: bold;
+    margin-bottom: 20px;
 }
 
 .signbox {
