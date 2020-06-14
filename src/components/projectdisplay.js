@@ -60,7 +60,7 @@ function Display(){
     }
 
 
-    function Displayprop(props){
+    /*function Displayprop(props){
 
         const tagList = ['crossplatform', 'desktop', 'react-based']
 
@@ -79,7 +79,7 @@ function Display(){
                 <Tag tag={props.tag}/>
             </div>
         )
-    }
+    }*/
 
 
     serverClient.query(
@@ -92,19 +92,23 @@ function Display(){
     var newTestArray = JSON.parse(localStorage.getItem('projects'))
     console.log(newTestArray)
     const [tagNames, settagNames] = useState([])
-    newTestArray.map(current => {console.log(current.Categories)})
-    console.log(tagNames)
+
+    const taggies = newTestArray.map(current => current.Categories)
+    console.log(taggies)
     return(
-        <div style={{margin: "auto"}}>
-            <Displayprop pic={me} name="Alonzo" likes="125 likes" participants="14 participants"  title="Codetake" description="this is a pwa that allows anyone to show their take on a concept or solution and get feedback from others as they review and test your take"/>
-            {
-                newTestArray.map((current, index) => {console.log({tagNames}); return (
-                    <Displayprop pic={me} name={current.Creator} likes="0" participants={current.Participant_num} title={current.Project_Title} description={current.Description} tag={current.Categories}/>
-                    
-                   )
-            })}
-            {/*<Displayprop pic={me} name="Alonzo" likes="125 likes" participants={projectArray.Participant_num}  title={projectArray.Project_Title} description={projectArray.Description}/>*/}
-        </div>
+        
+        newTestArray.map(Current => {console.log(Current.Categories); return (<div className="display" style={{width: '300px'}}>
+            <h1 onClick={choseOne} className="displaytitle"><strong>{Current.Project_Title}</strong></h1>
+            <p><strong>{Current.Description}</strong></p>
+            <br />
+            <p style={{display: 'inline-block', margin: '5px'}}>1</p>
+            <p style={{display: 'inline-block', margin: '5px'}}>1</p>
+            <br />
+            <img className="creatorpic" src={me} />
+            <p className="creatorname"><strong>{Current.Creator}</strong></p>
+            <br />
+            {/*Current.Categories.map(each => <Tag tag={each}/>)*/}
+        </div>)})
     )
 }
 

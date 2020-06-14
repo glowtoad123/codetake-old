@@ -51,7 +51,7 @@ function Enter(props){
         setEnhancedPassword(derivedKey.toString('hex'))
       })*/
       
-      crypto.pbkdf2(alphaPassword, 'salt', 1, 64, 'sha512', (err, derivedKey) => {
+      crypto.pbkdf2(alphaPassword, 'salt', 10, 64, 'sha512', (err, derivedKey) => {
         if (err) throw err;
         setEnhancedPassword(derivedKey.toString('hex'))
       
@@ -161,7 +161,7 @@ function Enter(props){
         //account.password = alphaPassword
 
         
-      crypto.pbkdf2(alphaPassword, 'salt', 1, 64, 'sha512', (err, derivedKey) => {
+      crypto.pbkdf2(alphaPassword, 'salt', 10, 64, 'sha512', (err, derivedKey) => {
           if (err) throw err;
           account.password = derivedKey.toString('hex')
           console.log(enhancedPassword);

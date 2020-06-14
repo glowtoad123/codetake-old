@@ -31,6 +31,7 @@ body {
 .signbox {
     background-color: #cad2c5;
     border: none;
+    border-radius: 12px;
     display: "block";
     width: 500px;
     position: relative;

@@ -16,7 +16,6 @@ function Newproject(){
         Categories: [],
         Changes: "",
         Roadmap: "",
-        type: "project",
         Creator: username,
     })
 
@@ -51,7 +50,7 @@ function Newproject(){
               { data: projectData },
             )
           ).then(ret => console.log(ret.data))
-        //event.preventDefault()
+        event.preventDefault()
     }
 
     return(
