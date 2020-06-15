@@ -6,18 +6,6 @@ function Display(){
 //test to see if the project is broken or not
     const [projectArray, setProjectArray] =  useState("")
     const testArray = []
-
-
-
-    var theNewOne =             {"Categories": "none",
-    "Changes": "creation",
-    "Description": "an app",
-    "Participant_num": "0",
-    "Project_Title": "a random app",
-    "Roadmap": "death",
-    "Version_num": "0.01",    }
-
-    testArray.push(theNewOne)
     var serverClient = new faunadb.Client({ secret: 'fnADpgTNT1ACEiUC4G_M5eNjnIPvv_eL99-n5nhe' });
 
     /*serverClient.query(
@@ -95,11 +83,12 @@ function Display(){
 
     const taggies = newTestArray.map(current => current.Categories)
     console.log(taggies)
+    console.log(newTestArray.Categories)
     return(
         
-        newTestArray.map(Current => {console.log(Current.Categories); return (<div className="display" style={{width: '300px'}}>
+        newTestArray.map((Current, index) => {const Categories = Current.Categories; return (<div className="display" style={{width: '300px'}}>
             <h1 onClick={choseOne} className="displaytitle"><strong>{Current.Project_Title}</strong></h1>
-            <p><strong>{Current.Description}</strong></p>
+            <p><strong>{Current.Description.slice(0, 99) + "..."}</strong></p>
             <br />
             <p style={{display: 'inline-block', margin: '5px'}}>1</p>
             <p style={{display: 'inline-block', margin: '5px'}}>1</p>
@@ -107,7 +96,7 @@ function Display(){
             <img className="creatorpic" src={me} />
             <p className="creatorname"><strong>{Current.Creator}</strong></p>
             <br />
-            {/*Current.Categories.map(each => <Tag tag={each}/>)*/}
+            {taggies[index].map(each => <Tag tag={each}/>)}
         </div>)})
     )
 }
