@@ -5,12 +5,21 @@ import user from './user.svg'
 import favorites from './favorite.svg'
 import updates from './notification.svg'
 import settings from './settings.svg'
+import add from './plus.svg'
+import Enter from './enter'
+import Newprojects from './newProject'
+import Display from './projectdisplay'
 
 
-function Navprop(props){
+function Components(){
+
+    const [currentPage, setcurrentPage] = useState("takes")
+
+    function Navprop(props){
 
     function changePage(event){
         sessionStorage.setItem("page", event.target.innerText)
+        setcurrentPage(event.target.innerText)
         var pageTest = sessionStorage.getItem("page")
         console.log("pageTest: " + pageTest)
     }
@@ -33,11 +42,11 @@ function Navprop(props){
                 }}><strong>{props.description}</strong></p>
         </div>
     )
-}
+    }
 
-function Navbar(){
 
-    var NavbarStyle = {
+        function Navbar(){
+            var NavbarStyle = {
         backgroundColor: "#cad2c5",
         border: "none",
         borderRadius: "12px",
@@ -47,12 +56,12 @@ function Navbar(){
         top: "0",
         zIndex: "2",
         display: "inline-block",
-    }
+            }
 
-    var prevScrollPos = window.pageYOffset;
-    const [currentScrollPos, setCurrentScrollPos] = useState("")
-    const [hasMoved, setHasMoved] = useState(true)
-    window.onscroll = function() {
+            var prevScrollPos = window.pageYOffset;
+            const [currentScrollPos, setCurrentScrollPos] = useState("")
+            const [hasMoved, setHasMoved] = useState(true)
+            window.onscroll = function() {
       var currentScrollPos = window.pageYOffset;
       if (prevScrollPos > currentScrollPos) {
         setHasMoved(current => false);
@@ -60,21 +69,35 @@ function Navbar(){
         setHasMoved(true)
       }
       prevScrollPos = currentScrollPos;
-    } 
+            } 
 
-    hasMoved && (NavbarStyle.display = "none")
-    !hasMoved && (NavbarStyle.display = "inline-block")
+            hasMoved && (NavbarStyle.display = "none")
+            !hasMoved && (NavbarStyle.display = "inline-block")
 
+
+
+            const page = sessionStorage.getItem("page")
+
+            return(
+                <div className="navbar" style={NavbarStyle}>
+                    <Navprop pic={takes} description="takes" />
+                    <Navprop pic={add} description="add" />
+                    <Navprop pic={user} description="my account" />
+                    <Navprop pic={favorites} description="favorites" />
+                    <Navprop pic={updates} description="updates" />
+                    <Navprop pic={settings} description="settings" />
+                </div>
+
+
+            )
+        }
     return(
-        <div className="navbar" style={NavbarStyle}>
-            <Navprop pic={takes} description="takes" />
-            <Navprop pic={user} description="my account" />
-            <Navprop pic={favorites} description="favorites" />
-            <Navprop pic={updates} description="updates" />
-            <Navprop pic={settings} description="settings" />
+        <div>
+            <Navbar />
+            {currentPage === "takes" && <Display />}
+            {currentPage === "add" && <Newprojects />}
         </div>
     )
-    
 }
 
-export default Navbar
+export default Components

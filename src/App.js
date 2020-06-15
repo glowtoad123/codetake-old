@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import logo from './logo.svg';
-import Navbar from './components/navbar'
+import Components from './components/navbar'
 import Display from './components/projectdisplay'
 import './styles.css';
 import Enter from './components/enter'
@@ -22,15 +22,16 @@ function App() {
   console.log(cp)
   console.log(page)
 
+  const username = sessionStorage.getItem("username")
+
   return (
     <div className="App container">
       <header className="App-header">
-        <Navbar onClick={alterPage} />
-        <Enter />
+        {!username && <Enter />}
+        <Components onClick={alterPage} />
         {/*{page === "takes" && <Display />}
         <button onClick={toNewProjectPage} className="newProject" name="newProject">Create New Project</button>*/}
-        <Newproject />
-        <Display />
+        {/*<Display />*/}
       </header>
       <div style={{
         backgroundColor: "white",
