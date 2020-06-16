@@ -18,20 +18,21 @@ function Components(){
     function Navprop(props){
 
     function changePage(event){
-        sessionStorage.setItem("page", event.target.innerText)
-        setcurrentPage(event.target.innerText)
+        sessionStorage.setItem("page", event.target.title)
+        setcurrentPage(event.target.title)
+        console.log("name: " + event.target.title)
         var pageTest = sessionStorage.getItem("page")
         console.log("pageTest: " + pageTest)
     }
 
     return(
-        <div onClick={changePage}>
+        <div title={props.description} onClick={changePage}>
             <img style={{
                 width: '48px', 
                 height: '48px',
                 marginRight: '20px',
-                }} className="navpic" src={props.pic} />
-            <p style={{
+                }} title={props.description} className="navpic" src={props.pic} />
+            <div style={{
                 display: 'inline-block',
                 fontSize: "16px",
                 position: 'relative',
@@ -39,7 +40,7 @@ function Components(){
                 backgroundColor: "#2f3e46",
                 borderRadius: "6px",
                 color: "white"
-                }}><strong>{props.description}</strong></p>
+                }} title={props.description}><strong>{props.description}</strong></div>
         </div>
     )
     }
@@ -94,6 +95,7 @@ function Components(){
     return(
         <div>
             <Navbar />
+            {currentPage === "" && <Display />}
             {currentPage === "takes" && <Display />}
             {currentPage === "add" && <Newprojects />}
         </div>
