@@ -25,6 +25,14 @@ function Components(){
         console.log("pageTest: " + pageTest)
     }
 
+    function changePage1(event){
+        sessionStorage.setItem("page", event.target.innerText)
+        setcurrentPage(event.target.innerText)
+        console.log("name: " + event.target.innerText)
+        var pageTest = sessionStorage.getItem("page")
+        console.log("pageTest: " + pageTest)
+    }
+
     return(
         <div title={props.description} onClick={changePage}>
             <img style={{
@@ -40,7 +48,7 @@ function Components(){
                 backgroundColor: "#2f3e46",
                 borderRadius: "6px",
                 color: "white"
-                }} title={props.description}><strong>{props.description}</strong></div>
+                }} onClick={changePage1} title={props.description}><strong title={props.description}>{props.description}</strong></div>
         </div>
     )
     }

@@ -18,19 +18,17 @@ function Display(){
     console.log(testArray[4]))*/
 
     const [page, setPage] = useState(false)
-    const [chosenOne, setChosenOne] = useState("")
+    const [chosenOne, setChosenOne] = useState("nothing")
 
     function choseOne(event){
-
-        const title = event.target.parentElement.parentElement
-        //const name = event.target.parentElement.children[8].innerText
-        setPage((current) => {return !current})
-        //setChosenOne({project: title, creator: name})
-        console.log(title)
-        console.log(typeof event.target)
+        serverClient.query(
+            q.Get(
+            q.Match(q.Index("Project_Title"), event.target.innerText)
+        )).then((ret, index) => {console.log(ret); setChosenOne(ret.data)})
     }
 
     console.log(page)
+    console.log(chosenOne)
 
 
 
@@ -84,20 +82,57 @@ function Display(){
     const taggies = newTestArray.map(current => current.Categories)
     console.log(taggies)
     console.log(newTestArray.Categories)
+
+    function Displayprop() {
+        return(
+
+            newTestArray.map((Current, index) => {const Categories = Current.Categories; return (<div className="display" style={{width: '300px'}}>
+                <h1 onClick={choseOne} className="displaytitle"><strong>{Current.Project_Title}</strong></h1>
+                <p><strong>{Current.Description.slice(0, 99) + "..."}</strong></p>
+                <br />
+                <p style={{display: 'inline-block', margin: '5px'}}>1</p>
+                <p style={{display: 'inline-block', margin: '5px'}}>1</p>
+                <br />
+                <img className="creatorpic" src={me} />
+                <p className="creatorname"><strong>{Current.Creator}</strong></p>
+                <br />
+                {taggies[index].map(each => <Tag tag={each}/>)}
+            </div>)})
+        )
+    }
+
+    function Userdisplay(props){
+        return(
+            <div className="display" style={{width: '300px',}}>
+                <h1 onClick={choseOne} className="displaytitle"><strong>{props.Project_Title}</strong></h1>
+                <p style={{backgroundColor: "#ffffff"}}><strong>{props.Description}</strong></p>
+                <br />
+                <h1 className="textHead"><strong>Roadmap</strong></h1>
+                <p style={{backgroundColor: "#ffffff"}}><strong>{props.Roadmap}</strong></p>
+                <br />
+                <h1 className="textHead"><strong>Changes</strong></h1>
+                <p style={{backgroundColor: "#ffffff"}}><strong>{props.Changes}</strong></p>
+                <br />
+                <p style={{display: 'inline-block', margin: '5px'}}>1</p>
+                <p style={{display: 'inline-block', margin: '5px'}}>1</p>
+                <br />
+                <img className="creatorpic" src={me} />
+                <p className="creatorname"><strong>{props.Creator}</strong></p>
+                <br />
+                {props.Categories.map(each => <Tag tag={each}/>)}
+            </div>)
+    }
+
     return(
-        
-        newTestArray.map((Current, index) => {const Categories = Current.Categories; return (<div className="display" style={{width: '300px'}}>
-            <h1 onClick={choseOne} className="displaytitle"><strong>{Current.Project_Title}</strong></h1>
-            <p><strong>{Current.Description.slice(0, 99) + "..."}</strong></p>
-            <br />
-            <p style={{display: 'inline-block', margin: '5px'}}>1</p>
-            <p style={{display: 'inline-block', margin: '5px'}}>1</p>
-            <br />
-            <img className="creatorpic" src={me} />
-            <p className="creatorname"><strong>{Current.Creator}</strong></p>
-            <br />
-            {taggies[index].map(each => <Tag tag={each}/>)}
-        </div>)})
+        (chosenOne === "nothing") ? <Displayprop /> : <Userdisplay 
+        Project_Title= {chosenOne.Project_Title}
+        Description= {chosenOne.Description}
+        Roadmap={chosenOne.Roadmap}
+        Changes={chosenOne.Changes}
+        Creator={chosenOne.Creator}
+        Categories={chosenOne.Categories}
+        />
+         
     )
 }
 
