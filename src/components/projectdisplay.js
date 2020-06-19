@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import me from './me.jpg'
 import faunadb, { query as q } from "faunadb"
+import edit from './edit.svg'
 
 function Display(){
 //test to see if the project is broken or not
@@ -101,10 +102,20 @@ function Display(){
         )
     }
 
+    const username = sessionStorage.getItem("username")
+    console.log(username)
+
     function Userdisplay(props){
         return(
             <div className="display" style={{width: '300px',}}>
                 <h1 onClick={choseOne} className="displaytitle"><strong>{props.Project_Title}</strong></h1>
+                {props.Creator === username && <img style={{
+                width: '48px', 
+                height: '48px',
+                marginRight: '20px',
+                position: 'relative',
+                left: "110px"
+                }} title={props.description} className="navpic" src={edit} />}
                 <p style={{backgroundColor: "#ffffff"}}><strong>{props.Description}</strong></p>
                 <br />
                 <h1 className="textHead"><strong>Roadmap</strong></h1>
