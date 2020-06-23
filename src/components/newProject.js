@@ -53,6 +53,15 @@ function Newproject(){
         event.preventDefault()
     }
 
+
+    function removeTag(id){
+
+        settagList((current) => {
+            return current.filter((tagList, index) => {return index !== id})
+        })
+
+    }
+
     return(
         <div><form id="npform" onSubmit={saveData}>
             <input type="text" className="newProjectItem" onChange={settingData} name="Project_Title"     value={Project_Title}   placeholder=" Project Title"   id="Project_Title"    ></input>
@@ -60,7 +69,7 @@ function Newproject(){
             <textarea className="newProjectItem" onChange={settingData} name="Description"       value={Description}     placeholder=" Description"     id="Description"      ></textarea>
             <input type="text" className="newProjectItem" onChange={settingtagName} name="Categories"        value={tagName}      placeholder=" Categories"      id="Categories"       ></input>
                 <button onClick={settingtagList} id="addCategory" type="submit">Add Category</button>
-                <div>{tagList.map(current => <p className="tags" style={{
+                <div>{tagList.map((current, index) => <p onClick={() => removeTag(index)} className="tags" style={{
                 display: 'inline-block',
                 backgroundColor: '#84a98c',
                 color: "black",
