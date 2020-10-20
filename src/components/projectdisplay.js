@@ -1,5 +1,4 @@
 import React, {useState} from 'react'
-import Updateproject from './updateProject'
 import me from './me.jpg'
 import faunadb, { query as q } from "faunadb"
 import edit from './edit.svg'
@@ -114,7 +113,7 @@ function Display(){
     }
 
     return(
-        chosenOne === "nothing" ? <Displayprop /> : chosenOne !== "nothing" && refid === "" ? <Userdisplay 
+        chosenOne === "nothing" ? <Displayprop /> : chosenOne !== "nothing" && refid === "" && <Userdisplay 
         Project_Title= {chosenOne.Project_Title}
         Description= {chosenOne.Description}
         Roadmap={chosenOne.Roadmap}
@@ -122,7 +121,7 @@ function Display(){
         Creator={chosenOne.Creator}
         Categories={chosenOne.Categories}
         Id={chosenOne.Id}
-        /> : <Updateproject />
+        />
     )
 }
 
